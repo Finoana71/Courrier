@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1J8pT575tKSr5xyNqEbvA34InykEY1KiQt3/Muptims=",
+  "Hash": "TJ/BjmJ1DHSJ+fKoL7uGR8VAKZStJbQN5U79rZspEbk=",
   "Source": "Courrier",
   "BasePath": "_content/Courrier",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\Finoana\\MBDS\\.net\\projet\\Courrier-back-office\\Courrier\\obj\\Release\\net6.0\\scopedcss\\projectbundle\\Courrier.bundle.scp.css"
+    },
+    {
+      "Identity": "E:\\Finoana\\MBDS\\.net\\projet\\Courrier-back-office\\Courrier\\wwwroot\\css\\login.css",
+      "SourceId": "Courrier",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Finoana\\MBDS\\.net\\projet\\Courrier-back-office\\Courrier\\wwwroot\\",
+      "BasePath": "_content/Courrier",
+      "RelativePath": "css/login.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\login.css"
     },
     {
       "Identity": "E:\\Finoana\\MBDS\\.net\\projet\\Courrier-back-office\\Courrier\\wwwroot\\css\\site.css",

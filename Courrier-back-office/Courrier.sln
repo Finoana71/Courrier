@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courrier", "Courrier\Courrier.csproj", "{E79C4B9B-150C-4C56-B309-43BEEDD609ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courrier", "Courrier\Courrier.csproj", "{E79C4B9B-150C-4C56-B309-43BEEDD609ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
