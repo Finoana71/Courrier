@@ -1,9 +1,9 @@
 ﻿@page
-@model Courrier.Pages.LoginModel
+@model LoginModel
 @{
     ViewData["Title"] = "Connexion";
+    Layout = null; 
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +14,24 @@
 <body>
     <div class="container">
         <h1>@ViewData["Title"]</h1>
-
+        @if (Model.ModelState.Any())
+        {
+            <div class="error-message">
+                <ul>
+                    @foreach (var modelStateEntry in Model.ModelState.Values)
+                    {
+                        foreach (var error in modelStateEntry.Errors)
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
         <form method="post">
             <div>
-                <label for="username">Nom d'utilisateur :</label>
-                <input type="text" id="username" name="username" />
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" />
             </div>
             <div>
                 <label for="password">Mot de passe :</label>

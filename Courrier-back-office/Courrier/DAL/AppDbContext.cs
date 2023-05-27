@@ -1,5 +1,6 @@
 ﻿using Courrier.Models;
 using Microsoft.EntityFrameworkCore;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 
 namespace Courrier.DAL
@@ -32,8 +33,8 @@ namespace Courrier.DAL
             departements.ForEach(r => Departements.Add(r));
             var users = new List<User>
             {
-                new User{email="rakoto@gmail.com", password="12345678", username="Rakoto", role=roles[0], departement=departements[1]},
-                new User{email="rabe@gmail.com", password="12345678", username="Rabe", role=roles[1], departement=departements[1]}
+                new User{email="rakoto@gmail.com", password=BCryptNet.HashPassword("12345678"), username="Rakoto", role=roles[0], departement=departements[1]},
+                new User{email="rabe@gmail.com", password=BCryptNet.HashPassword("12345678"), username="Rabe", role=roles[1], departement=departements[1]}
             };
             users.ForEach(r => Users.Add(r));
             SaveChanges();

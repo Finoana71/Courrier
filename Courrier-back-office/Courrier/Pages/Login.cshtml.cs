@@ -1,9 +1,10 @@
+using Courrier.DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace Courrier.Pages
 {
-
     public class LoginModel : PageModel
     {
         private readonly ILogger<LoginModel> _logger;
@@ -18,12 +19,29 @@ namespace Courrier.Pages
             // Code exécuté lors du chargement de la page (méthode HTTP GET)
         }
 
-        public IActionResult OnPost(string username, string password)
+        public IActionResult OnPost(string email, string password)
         {
-            // Code exécuté lo
+            using (var dbContext = new AppDbContext())
+            {
+                var user = dbContext.Users.FirstOrDefault(u => u.email == email);
 
-            // Redirigez l'utilisateur vers une autre page après la connexion réussie
-            return RedirectToPage("/Index");
+                if (user != null)
+                {
+                    bool isPasswordValid = BCryptNet.Verify(password, user.password);
+
+                    if (isPasswordValid)
+                    {
+                        // Les informations d'identification sont valides, enregistrez l'utilisateur dans la session
+                        HttpContext.Session.SetString("UserId", user.Id.ToString());
+                        HttpContext.Session.SetString("Username", user.username);
+
+                        return RedirectToPage("/Index");
+                    }
+                }
+
+                ModelState.AddModelError(string.Empty, "Email ou mot de passe incorrect.");
+            }
+            return Page();
         }
     }
 }

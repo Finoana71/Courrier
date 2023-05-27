@@ -16,12 +16,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = E:\Finoana\MBDS\.net\projet\Courrier-back-office\Courrier
 build_property._RazorSourceGeneratorDebug = 
 
+[E:/Finoana/MBDS/.net/projet/Courrier-back-office/Courrier/Pages/Courrier/CreerCourrier.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291cnJpZXJcQ3JlZXJDb3Vycmllci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Finoana/MBDS/.net/projet/Courrier-back-office/Courrier/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Finoana/MBDS/.net/projet/Courrier-back-office/Courrier/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Finoana/MBDS/.net/projet/Courrier-back-office/Courrier/Pages/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Finoana/MBDS/.net/projet/Courrier-back-office/Courrier/Pages/Privacy.cshtml]
