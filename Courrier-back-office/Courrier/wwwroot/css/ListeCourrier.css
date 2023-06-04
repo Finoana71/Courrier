@@ -1,0 +1,43 @@
+﻿/* Styles pour le tableau des courriers */
+.courriers-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.courriers-table th, .courriers-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Styles pour la pagination */
+.pagination-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pagination li {
+    display: inline;
+}
+
+.pagination li a {
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+    .pagination li a:hover {
+        background-color: #eee;
+    }
+
+.pagination li.active a {
+    background-color: #007bff;
+    color: #fff;
+}

@@ -16,3 +16,44 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Couleurs */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+}
+
+/* Barre de navigation */
+.navbar {
+    background-color: var(--primary-color);
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.nav-link {
+    color: white;
+}
+
+/* Formulaire de déconnexion */
+.logout-form button {
+    background-color: #000000;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.logout-form button:hover {
+    text-decoration: underline;
+}
+
+/* Pied de page */
+footer.footer {
+    background-color: var(--secondary-color);
+    padding: 10px 0;
+    text-align: center;
+    color: white;
+}

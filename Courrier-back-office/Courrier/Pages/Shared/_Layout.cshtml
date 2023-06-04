@@ -23,10 +23,16 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Courrier/CreerCourrier">Créer un courrier</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Courrier/Liste">Liste</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Courrier/CreerCourrier">Créer</a>
                         </li>
                     </ul>
                 </div>
+                <form method="post" asp-page="/Login"  asp-page-handler="Logout" class="logout-form">
+                    <button type="submit">Déconnexion</button>
+                </form>
             </div>
         </nav>
     </header>

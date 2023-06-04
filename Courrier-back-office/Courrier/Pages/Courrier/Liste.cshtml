@@ -1,0 +1,89 @@
+﻿@page
+@model ListeModel
+@{
+}
+<link rel="stylesheet" href="~/css/ListeCourrier.css" />
+<!-- Affichage des courriers -->
+<table class="courriers-table">
+    <thead>
+        <tr>
+            <th>Objet</th>
+            <th>Expediteur</th>
+            <th>Référence</th>
+            <th>Département</th>
+            <th>Date de création</th>
+            <th>Flag</th>
+            <th>Statut</th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var courrier in Model.CourriersPage.Items)
+        {
+            <tr>
+                <td>@courrier.Courrier.Objet</td>
+                <td>@courrier.Courrier.Expediteur</td>
+                <td>@courrier.Courrier.Reference</td>
+                <td>@courrier.Departement.Nom</td>
+                <td>@courrier.Courrier.DateCreation.ToShortDateString()</td>
+                <td>@courrier.Courrier.Flag.Libelle</td>
+                <td>@courrier.Statut.Libelle</td>
+                <td>
+                    <a href="/Courrier/Details/@courrier.Courrier.Id" class="btn btn-primary">Voir détails</a>
+            
+                    @if (courrier.IdStatut == 1 && courrier.IdCoursier == null)
+                    {
+                        <button class="btn btn-success" onclick="assignerCoursier('@courrier.Courrier.Id')">Assigner coursier</button>
+                    }
+                    else if (courrier.IdStatut == 2 && Model.CurrentUser.IdRole == 4)
+                    {
+                        <button class="btn btn-warning" onclick="transfererSecretaire('@courrier.Courrier.Id')">Transférer secrétaire</button>
+                    }
+                    else if (courrier.IdStatut == 3 && Model.CurrentUser.IdRole == 2)
+                    {
+                        <button class="btn btn-danger" onclick="transfererDirecteur('@courrier.Courrier.Id')">Transférer directeur</button>
+                    }
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<!-- Liens de pagination -->
+@if (Model.CourriersPage.TotalPages > 1)
+{
+    <div class="pagination-container">
+        <nav>
+            <ul class="pagination">
+                @if (Model.CourriersPage.PageNumber > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="1">Première page</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="@(Model.CourriersPage.PageNumber - 1)">Page précédente</a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= Model.CourriersPage.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.CourriersPage.PageNumber ? "active" : "")">
+                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="@i">@i</a>
+                    </li>
+                }
+
+                @if (Model.CourriersPage.PageNumber < Model.CourriersPage.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="@(Model.CourriersPage.PageNumber + 1)">Page suivante</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="@Model.CourriersPage.TotalPages">Dernière page</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+}

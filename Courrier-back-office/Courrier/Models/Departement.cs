@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Courrier.Models.Courrier;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Courrier.Models
 {
@@ -6,6 +7,9 @@ namespace Courrier.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        public string nom { get; set; }
+        public string Nom { get; set; }
+
+        public ICollection<CourrierDestinataire> CourrierDestinataires { get; set; }
+
     }
 }

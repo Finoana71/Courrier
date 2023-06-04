@@ -6,7 +6,7 @@ namespace Courrier.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        public string nom { get; set; }
+        public string Nom { get; set; }
 
     }
 }
