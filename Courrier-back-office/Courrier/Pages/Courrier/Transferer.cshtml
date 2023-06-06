@@ -1,0 +1,35 @@
+﻿@page
+@model TransfererModel
+@{
+}
+@{
+    ViewData["Title"] = "Transférer";
+}
+
+<link rel="stylesheet" href="~/css/Transferer.css" />
+
+<h1>Transférer le courrier</h1>
+
+<div id="CourrierContainer">
+    @if (Model.Courrier != null)
+    {
+        <h2>Détails du courrier</h2>
+        <p>Objet : @Model.Courrier.Courrier.Objet</p>
+        <p>Expediteur : @Model.Courrier.Courrier.Expediteur</p>
+        <p>Destinataire : @Model.Courrier.Departement.Nom</p>
+        <!-- Autres détails du courrier -->
+    }
+</div>
+
+<form method="post">
+    <input type="hidden" name="id" value="@Model.Courrier.Id">
+    <label for="selectedCoursier">Sélectionnez un utilisateur :</label>
+    <select name="selectedCoursier" id="selectedCoursier">
+        <option value="">Sélectionnez un coursier</option>
+        @foreach (var user in Model.Coursiers)
+        {
+            <option value="@user.Id">@user.Username</option>
+        }
+    </select>
+    <button type="submit">Transférer</button>
+</form>

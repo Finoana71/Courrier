@@ -47,13 +47,12 @@ namespace Courrier.Pages.Courrier
 
         public async Task<IActionResult> OnPostAsync()
         {
-            ClaimsPrincipal currentUser = User;
             //if (!ModelState.IsValid || _context.Courriers == null || Courrier == null)
             if (_dbContext.Courriers == null || Courrier == null)
             {
                 return Page();
             }
-
+            ClaimsPrincipal currentUser = User;
             string email = currentUser.Identity.Name;
             User user = _userService.findByEmail(email);
             _courrierService.Creer(Courrier, user, SelectedDepartements, FileUpload);

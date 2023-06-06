@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "yVDAnj87Av+fB1ic4wGeTRm8Ehesqmvl30rDk77ojZI=",
+  "Hash": "yfCuODVHJ3QM9uLARgP2PBYEN8ybg+sEs44uhskOxkA=",
   "Source": "Courrier",
   "BasePath": "_content/Courrier",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "E:\\Finoana\\MBDS\\.net\\projet\\Courrier-back-office\\Courrier\\wwwroot\\css\\Transferer.css",
+      "SourceId": "Courrier",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Finoana\\MBDS\\.net\\projet\\Courrier-back-office\\Courrier\\wwwroot\\",
+      "BasePath": "_content/Courrier",
+      "RelativePath": "css/Transferer.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Transferer.css"
     },
     {
       "Identity": "E:\\Finoana\\MBDS\\.net\\projet\\Courrier-back-office\\Courrier\\wwwroot\\favicon.ico",

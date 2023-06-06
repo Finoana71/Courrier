@@ -15,6 +15,9 @@
     text-align: center;
 }
 
+.btn{
+    margin: 2px;
+}
 .pagination {
     display: inline-block;
     list-style: none;

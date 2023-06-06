@@ -2,8 +2,6 @@ using Courrier.DAL;
 using Courrier.Models;
 using Courrier.Models.Courrier;
 using Courrier.Services;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 
@@ -15,7 +13,7 @@ namespace Courrier.Pages.Courrier
         private readonly CourrierService _courrierService;
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 2;
-        public Page<CourrierDestinataire> CourriersPage { get; set; }
+        public Pages<CourrierDestinataire> CourriersPage { get; set; }
 
         public User CurrentUser;
         public void OnGet(int? page)

@@ -47,11 +47,11 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var dbContext = services.GetRequiredService<AppDbContext>();
-    dbContext.Database.EnsureDeleted();
-    dbContext.Database.EnsureCreated();
+    //dbContext.Database.EnsureDeleted();
+    //dbContext.Database.EnsureCreated();
     // dbContext.Database.GenerateCreateScript();
     dbContext.Database.Migrate();
-    dbContext.SeedData();
+    //dbContext.SeedData();
 }
 
 // Configure the HTTP request pipeline.

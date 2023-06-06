@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\css\\ListeCourrier.css"
     },
     {
+      "Id": "E:\\Finoana\\MBDS\\.net\\projet\\Courrier-back-office\\Courrier\\wwwroot\\css\\Transferer.css",
+      "PackagePath": "staticwebassets\\css\\Transferer.css"
+    },
+    {
       "Id": "E:\\Finoana\\MBDS\\.net\\projet\\Courrier-back-office\\Courrier\\wwwroot\\css\\login.css",
       "PackagePath": "staticwebassets\\css\\login.css"
     },

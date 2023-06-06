@@ -18,5 +18,10 @@ namespace Courrier.Services
             return _dbContext.Users.Include(user=> user.Role)
                     .FirstOrDefault(u => u.Email == email);
         }
+
+        public List<User> GetAllCoursier()
+        {
+            return _dbContext.Users.Where(u => u.IdRole == 4).ToList();
+        }
     }
 }

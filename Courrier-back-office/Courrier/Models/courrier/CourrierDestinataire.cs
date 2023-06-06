@@ -1,5 +1,6 @@
 ﻿using Courrier.Models.courrier;
 using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,14 +8,17 @@ namespace Courrier.Models.Courrier
 {
     public class CourrierDestinataire
     {
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
+
         [ForeignKey("Departement")]
         [Required]
         public int IdDepartement { get; set; }
+
         [ForeignKey("Courrier")]
         public int IdCourrier { get; set; }
+
         [ForeignKey("Statut")]
         public int IdStatut { get; set; }
 
@@ -26,6 +30,6 @@ namespace Courrier.Models.Courrier
         public User? Coursier { get; set; }
         public Statut Statut { get; set; }
         public ICollection<HistoriqueCourrierDestinataire> Historiques { get; set; }
-
     }
+
 }

@@ -23,6 +23,7 @@ namespace Courrier.DAL
         public DbSet<CourrierModel> Courriers { get; set; }
         public DbSet<CourrierDestinataire> CourriersDestinataires { get; set; }
         public DbSet<StatutCourrier> StatutsCourrier { get; set; }
+        public DbSet<HistoriqueCourrierDestinataire> HistoriqueCourrierDestinataire { get; set; }
 
         public void SeedData()
         {
@@ -59,10 +60,10 @@ namespace Courrier.DAL
             users.ForEach(r => Users.Add(r));
             var statuts = new List<Statut>
             {
-                new Statut{Id=1, Libelle="Créé"},
+                new Statut{Id=1, Libelle="Reçu"},
                 new Statut{Id=2, Libelle="Transféré coursier"},
                 new Statut{Id=3, Libelle="Transféré secretaire"},
-                new Statut{Id=4, Libelle="Reçu directeur"}
+                new Statut{Id=4, Libelle="Livré"}
             };
             statuts.ForEach(r => Statuts.Add(r));
 
@@ -85,8 +86,6 @@ namespace Courrier.DAL
             modelBuilder.Entity<User>()
                 .HasOne(e => e.Departement);
 
-            modelBuilder.Entity<CourrierDestinataire>()
-                .HasKey(cd => new { cd.IdCourrier, cd.IdDepartement });
 
             modelBuilder.Entity<CourrierDestinataire>()
                 .HasOne(cd => cd.Courrier)
