@@ -6,11 +6,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();   
+builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+
 builder.Services.AddDbContext<AppDbContext>();
 
 builder.Services.AddScoped<UploadService>();
@@ -90,6 +94,7 @@ app.Use(async (context, next) =>
 
     await next();
 });
+
 
 app.MapRazorPages();
 

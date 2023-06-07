@@ -122,32 +122,155 @@ namespace Courrier.Services
                 .FirstOrDefault(c => c.Id == courrierId);
         }
 
+
         public void TransfererCoursier(int idCourrierDestinataire, int idCoursier)
         {
             // Récupérer le courrier destinataire par son ID
-            CourrierDestinataire courrierDestinataire = _dbContext.CourriersDestinataires
-                .Include(cd => cd.Courrier)
-                .Include(cd => cd.Statut)
-                .FirstOrDefault(cd => cd.Id == idCourrierDestinataire);
-
+            CourrierDestinataire courrierDestinataire = GetCourrierById(idCourrierDestinataire);            
             if (courrierDestinataire != null)
             {
                 // Mettre à jour l'ID du coursier et le statut du courrier destinataire
                 courrierDestinataire.IdCoursier = idCoursier;
                 courrierDestinataire.IdStatut = 2;
-
-                // Insérer un nouvel historique de courrier destinataire
-                HistoriqueCourrierDestinataire historique = new HistoriqueCourrierDestinataire
-                {
-                    IdCourrierDestinataire = idCourrierDestinataire,
-                    IdStatut = 2,
-                    DateHistorique = DateTime.UtcNow
-                };
-
-                _dbContext.HistoriqueCourrierDestinataire.Add(historique);
+                insererHistorique(idCourrierDestinataire, 2);
                 _dbContext.SaveChanges();
             }
         }
+
+        public void insererHistorique(int idCourrierDestinataire, int idStatut)
+        {
+            // Insérer un nouvel historique de courrier destinataire
+            HistoriqueCourrierDestinataire historique = new HistoriqueCourrierDestinataire
+            {
+                IdCourrierDestinataire = idCourrierDestinataire,
+                IdStatut = idStatut,
+                DateHistorique = DateTime.UtcNow
+            };
+            _dbContext.HistoriqueCourrierDestinataire.Add(historique);
+
+        }
+        public void TransfererSecretaire(int idCourrierDestinataire)
+        {
+            // Récupérer le courrier destinataire par son ID
+            CourrierDestinataire courrierDestinataire = GetCourrierById(idCourrierDestinataire);
+            if (courrierDestinataire != null)
+            {
+                courrierDestinataire.IdStatut = 3;
+                insererHistorique(idCourrierDestinataire, 3);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        public void TransfererDirecteur(int idCourrierDestinataire)
+        {
+            // Récupérer le courrier destinataire par son ID
+            CourrierDestinataire courrierDestinataire = GetCourrierById(idCourrierDestinataire);
+            if (courrierDestinataire != null)
+            {
+                courrierDestinataire.IdStatut = 4;
+                insererHistorique(idCourrierDestinataire, 4);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        public Pages<CourrierDestinataire> GetCourriersByCriteria(User user, int page, int pageSize, int? flag, int? statut, string expediteur, int? departement, string reference)
+        {
+            IQueryable<CourrierDestinataire> query = FilterCourriersByUserRole(user);
+
+            query = ApplyFlagFilter(query, flag);
+            query = ApplyStatutFilter(query, statut);
+            query = ApplyExpediteurFilter(query, expediteur);
+            query = ApplyDepartementFilter(query, departement);
+            query = ApplyReferenceFilter(query, reference);
+
+            // Pagination
+            int totalCount = query.Count();
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+            query = IncludeRelatedEntities(query);
+
+            List<CourrierDestinataire> CourriersDestinataires = query.ToList();
+
+            return new Pages<CourrierDestinataire>(CourriersDestinataires, page, pageSize, totalCount, totalPages);
+        }
+
+        private IQueryable<CourrierDestinataire> ApplyFlagFilter(IQueryable<CourrierDestinataire> query, int? flag)
+        {
+            if (flag != null)
+            {
+                return query.Where(d => d.Courrier.Flag.Id == flag);
+            }
+            return query;
+        }
+
+        private IQueryable<CourrierDestinataire> ApplyStatutFilter(IQueryable<CourrierDestinataire> query, int? statut)
+        {
+            if (statut != null)
+            {
+                return query.Where(d => d.Statut.Id == statut);
+            }
+            return query;
+        }
+
+        private IQueryable<CourrierDestinataire> ApplyExpediteurFilter(IQueryable<CourrierDestinataire> query, string expediteur)
+        {
+            if (!string.IsNullOrEmpty(expediteur))
+            {
+                return query.Where(d => d.Courrier.Expediteur.Contains(expediteur));
+            }
+            return query;
+        }
+
+        private IQueryable<CourrierDestinataire> ApplyDepartementFilter(IQueryable<CourrierDestinataire> query, int? departement)
+        {
+            if (departement != null)
+            {
+                return query.Where(d => d.Departement.Id == departement);
+            }
+            return query;
+        }
+
+        private IQueryable<CourrierDestinataire> ApplyReferenceFilter(IQueryable<CourrierDestinataire> query, string reference)
+        {
+            if (!string.IsNullOrEmpty(reference))
+            {
+                return query.Where(d => d.Courrier.Reference.Contains(reference));
+            }
+            return query;
+        }
+
+        public Dictionary<string, int> GetStatCourrierFlag()
+        {
+            var flags = _dbContext.Flags.Select(f => f.Libelle).ToList();
+            var courriersByFlag = _dbContext.Courriers
+                .GroupBy(c => c.Flag.Libelle)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            foreach (var flag in flags)
+            {
+                if (!courriersByFlag.ContainsKey(flag))
+                    courriersByFlag[flag] = 0;
+            }
+            return courriersByFlag;
+        }
+
+        public Dictionary<string, int> GetStatCourrierStatut()
+        {
+            var statuts = _dbContext.Statuts.Select(s => s.Libelle).ToList();
+            var courriersByStatut = _dbContext.CourriersDestinataires
+                .GroupBy(d => d.Statut.Libelle)
+                .ToDictionary(g => g.Key, g => g.Count());
+            foreach (var statut in statuts)
+            {
+                if (!courriersByStatut.ContainsKey(statut))
+                    courriersByStatut[statut] = 0;
+            }
+            return courriersByStatut;
+        }
+
+
+
     }
 
     public class Pages<T>

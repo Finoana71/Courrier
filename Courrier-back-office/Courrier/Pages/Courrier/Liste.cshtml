@@ -3,16 +3,70 @@
 @{
 }
 <link rel="stylesheet" href="~/css/ListeCourrier.css" />
+
+<form method="get" action="/Courrier/Liste">
+    <div class="row">
+        <!-- Champ de recherche pour le flag -->
+        <div class="form-group col-md-3">
+            <label for="inputFlag">Flag</label>
+            <select class="form-control" id="inputFlag" name="flag">
+                <option value="">-- Tous --</option>
+                @foreach (var flag in Model.Flags)
+                {
+                    <option value="@flag.Id">@flag.Libelle</option>
+                }
+            </select>
+        </div>
+        <!-- Champ de recherche pour le statut -->
+        <div class="form-group col-md-3">
+            <label for="inputStatut">Statut</label>
+            <select class="form-control" id="inputStatut" name="statut">
+                <option value="">-- Tous --</option>
+                @foreach (var statut in Model.Statuts)
+                {
+                    <option value="@statut.Id">@statut.Libelle</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="inputExpediteur">Expéditeur</label>
+            <input type="text" class="form-control" id="inputExpediteur" name="expediteur">
+        </div>
+        <!-- Champ de recherche pour le département -->
+        <div class="form-group col-md-3">
+            <label for="inputDepartement">Département</label>
+            <select class="form-control" id="inputDepartement" name="departement">
+                <option value="">-- Tous --</option>
+                @foreach (var departement in Model.Departements)
+                {
+                    <option value="@departement.Id">@departement.Nom</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputReference">Référence</label>
+            <input type="text" class="form-control" id="inputReference" name="reference">
+        </div>
+    </div>
+    <div style="text-align: right;" class="mt-1 mb-3">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </div>
+</form>
+
+
 <!-- Affichage des courriers -->
-<table class="courriers-table">
+<table class="courriers-table mt-3">
     <thead>
         <tr>
             <th>Objet</th>
             <th>Expediteur</th>
             <th>Référence</th>
             <th>Département</th>
+            <th>Fichier joint</th>
             <th>Date de création</th>
             <th>Flag</th>
+            <th>Externe</th>
             <th>Statut</th>
             
             <th></th>
@@ -26,8 +80,25 @@
                 <td>@courrier.Courrier.Expediteur</td>
                 <td>@courrier.Courrier.Reference</td>
                 <td>@courrier.Departement.Nom</td>
+                <td>
+                    @if (courrier.Courrier.Fichier != null)
+                    {
+                        <a href="/uploads/@courrier.Courrier.Fichier" class="btn btn-link" download>Télécharger</a>
+
+                    }
+                </td>
                 <td>@courrier.Courrier.DateCreation.ToShortDateString()</td>
                 <td>@courrier.Courrier.Flag.Libelle</td>
+                <td>
+                    @if (courrier.Courrier.Interne)
+                    {
+                        <span>Non</span>
+                    }
+                    else
+                    {
+                        <span>Oui</span> 
+                    }
+                </td>
                 <td>@courrier.Statut.Libelle</td>
                 <td>
                     <a href="/Courrier/Details/@courrier.Id" class="btn btn-primary">Voir détails</a>
@@ -36,13 +107,17 @@
                     {
                         <a class="btn btn-success" href="/Courrier/Transferer?id=@courrier.Id">Transférer coursier</a>
                     }
-                    else if (courrier.IdStatut == 2 && Model.CurrentUser.IdRole == 4)
+                    @if (courrier.IdStatut == 2 && Model.CurrentUser.IdRole == 4 )
                     {
-                        <button class="btn btn-warning" onclick="transfererSecretaire('@courrier.Id')">Transférer secrétaire</button>
+                        <form method="post" asp-page-handler="TransfererSecretaire" asp-route-courrierId="@courrier.Id">
+                            <button type="submit" class="btn btn-warning">Transférer secrétaire</button>
+                        </form>
                     }
-                    else if (courrier.IdStatut == 3 && Model.CurrentUser.IdRole == 2)
+                    @if ((courrier.IdStatut == 3 && Model.CurrentUser.IdRole == 2) || (courrier.IdStatut == 2 && Model.CurrentUser.IdRole == 4))
                     {
-                        <button class="btn btn-danger" onclick="transfererDirecteur('@courrier.Id')">Envoyer directeur</button>
+                        <form method="post" asp-page-handler="TransfererDirecteur" asp-route-courrierId="@courrier.Id">
+                            <button type="submit" class="btn btn-danger">Envoyer directeur</button>
+                        </form>
                     }
                 </td>
             </tr>
@@ -57,33 +132,31 @@
     <div class="pagination-container">
         <nav>
             <ul class="pagination">
-                @if (Model.CourriersPage.PageNumber > 1)
+                @if (Model.CourriersPage.TotalPages > 1)
                 {
-                    <li class="page-item">
-                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="1">Première page</a>
+                    <li class="page-item @(Model.CourriersPage.PageNumber == 1 ? "disabled" : "")">
+                        <a class="page-link" href="/Courrier/Liste?page=@(Model.CourriersPage.PageNumber - 1)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Précédent</span>
+                        </a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="@(Model.CourriersPage.PageNumber - 1)">Page précédente</a>
-                    </li>
-                }
 
-                @for (int i = 1; i <= Model.CourriersPage.TotalPages; i++)
-                {
-                    <li class="page-item @(i == Model.CourriersPage.PageNumber ? "active" : "")">
-                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="@i">@i</a>
-                    </li>
-                }
+                    @for (int i = 1; i <= Model.CourriersPage.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.CourriersPage.PageNumber == i ? "active" : "")">
+                            <a class="page-link" href="/Courrier/Liste?page=@i">@i</a>
+                        </li>
+                    }
 
-                @if (Model.CourriersPage.PageNumber < Model.CourriersPage.TotalPages)
-                {
-                    <li class="page-item">
-                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="@(Model.CourriersPage.PageNumber + 1)">Page suivante</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" asp-page="/Courrier/Liste" asp-route-page="@Model.CourriersPage.TotalPages">Dernière page</a>
+                    <li class="page-item @(Model.CourriersPage.PageNumber == Model.CourriersPage.TotalPages ? "disabled" : "")">
+                        <a class="page-link" href="/Courrier/Liste?page=@(Model.CourriersPage.PageNumber + 1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Suivant</span>
+                        </a>
                     </li>
                 }
             </ul>
         </nav>
+
     </div>
 }

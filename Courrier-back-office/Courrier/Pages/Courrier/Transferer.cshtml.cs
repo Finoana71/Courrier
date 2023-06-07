@@ -44,11 +44,7 @@ namespace Courrier.Pages.Courrier
         {
             if (selectedCoursier != 0)
             {
-
-                ClaimsPrincipal currentUser = User;
-                string email = currentUser.Identity.Name;
-                User user = _userService.findByEmail(email);
-                _courrierService.TransfererCoursier(id, user.Id);
+                _courrierService.TransfererCoursier(id, selectedCoursier);
                 return Redirect("/Courrier/Liste");
             }
 

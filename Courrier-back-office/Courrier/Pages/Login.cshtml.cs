@@ -39,7 +39,7 @@ namespace Courrier.Pages
                         user.Role = dbContext.Roles.Find(user.IdRole);
                         var claims = new List<Claim>{
                             new Claim(ClaimTypes.Name, user.Email),
-                            new Claim(ClaimTypes.Role, user.Role.Nom),
+                            new Claim(ClaimTypes.Role, user.Role.Id + ""),
                             // Add other role claims as needed
                         };
 

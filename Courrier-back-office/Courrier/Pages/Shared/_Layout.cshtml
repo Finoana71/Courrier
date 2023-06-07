@@ -25,9 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Courrier/Liste">Liste</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Courrier/CreerCourrier">Créer</a>
-                        </li>
+                        @if (User.IsInRole("3"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Courrier/CreerCourrier">Créer</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <form method="post" asp-page="/Login"  asp-page-handler="Logout" class="logout-form">

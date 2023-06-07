@@ -147,6 +147,8 @@ namespace Courrier.DAL
                 .WithMany()
                 .HasForeignKey(cd => cd.IdCourrierDestinataire)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
         }
 
     }

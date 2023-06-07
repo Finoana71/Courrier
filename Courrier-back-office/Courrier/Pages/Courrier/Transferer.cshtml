@@ -23,7 +23,7 @@
 
 <form method="post">
     <input type="hidden" name="id" value="@Model.Courrier.Id">
-    <label for="selectedCoursier">Sélectionnez un utilisateur :</label>
+    <label for="selectedCoursier">Sélectionnez un coursier :</label>
     <select name="selectedCoursier" id="selectedCoursier">
         <option value="">Sélectionnez un coursier</option>
         @foreach (var user in Model.Coursiers)

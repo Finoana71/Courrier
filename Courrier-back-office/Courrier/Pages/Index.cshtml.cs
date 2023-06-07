@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Courrier.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,16 +7,21 @@ namespace Courrier.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly CourrierService _courrierService;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public Dictionary<string, int> CourriersParFlag { get; set; }
+        public Dictionary<string, int> CourriersParStatut { get; set; }
+
+        public IndexModel(CourrierService courrierService)
         {
-            _logger = logger;
+            _courrierService = courrierService;
         }
 
         public void OnGet()
         {
-
+            // Récupérer les statistiques
+            CourriersParFlag = _courrierService.GetStatCourrierFlag();
+            CourriersParStatut = _courrierService.GetStatCourrierStatut();
         }
     }
 }

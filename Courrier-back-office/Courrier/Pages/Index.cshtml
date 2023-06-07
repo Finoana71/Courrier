@@ -1,10 +1,51 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Tableau de bord";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Tableau de bord</h1>
+
+<!-- Afficher les statistiques -->
+<div class="row">
+    <div class="col-md-6">
+        <h2>Nombre de courriers actuels par Flag</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Flag</th>
+                    <th>Nombre de courriers</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var flagCount in Model.CourriersParFlag)
+                {
+                    <tr>
+                        <td>@flagCount.Key</td>
+                        <td>@flagCount.Value</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h2>Nombre de courriers actuels par Statut</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Statut</th>
+                    <th>Nombre de courriers</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var statutCount in Model.CourriersParStatut)
+                {
+                    <tr>
+                        <td>@statutCount.Key</td>
+                        <td>@statutCount.Value</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

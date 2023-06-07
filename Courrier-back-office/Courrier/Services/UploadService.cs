@@ -22,7 +22,7 @@
                 file.CopyTo(stream);
             }
 
-            return filePath;
+            return fileName;
         }
 
     }

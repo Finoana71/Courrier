@@ -2,13 +2,16 @@ using Courrier.DAL;
 using Courrier.Models;
 using Courrier.Models.Courrier;
 using Courrier.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 using System.Security.Claims;
 
 namespace Courrier.Pages.Courrier
 {
+    [Authorize(Roles = "3")]
     public class CreerCourrierModel : PageModel
     {
 
