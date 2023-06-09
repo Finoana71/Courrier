@@ -6,16 +6,17 @@ namespace CourrierFront.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly CourrierDataAccess _courrierDataAccess;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(CourrierDataAccess courrierDataAccess)
         {
-            _logger = logger;
+            _courrierDataAccess = courrierDataAccess;
         }
 
-        public IActionResult Index()
+        public ActionResult Index(string reference, string expediteur, string objet, int page = 1, int pageSize = 10)
         {
-            return View();
+            List<Courrier> courriers = _courrierDataAccess.GetCourriers(reference, expediteur, objet, page, pageSize);
+            return View(courriers);
         }
 
         public IActionResult Privacy()

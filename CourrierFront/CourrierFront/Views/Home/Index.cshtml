@@ -1,8 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using System.Web
+
+@model List<Courrier>
+@{
+    ViewBag.Title = "Liste des Courriers";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Liste des Courriers</h1>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Référence</th>
+            <th>Expéditeur</th>
+            <th>Objet</th>
+            <th>Flag</th>
+            <th>Département</th>
+            <th>Statut</th>
+            <th>Date de création</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var courrier in Model)
+        {
+            <tr>
+                <td>@courrier.Reference</td>
+                <td>@courrier.Expediteur</td>
+                <td>@courrier.Objet</td>
+                <td>@courrier.Flag.Libelle</td>
+                <td>@courrier.Departement.Nom</td>
+                <td>@courrier.Statut.Libelle</td>
+                <td>@courrier.DateCreation</td>
+            </tr>
+        }
+    </tbody>
+</table>

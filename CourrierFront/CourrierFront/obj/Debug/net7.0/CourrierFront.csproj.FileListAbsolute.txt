@@ -36,3 +36,5 @@ E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\obj\Debug\net7.0\refint\
 E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\obj\Debug\net7.0\CourrierFront.pdb
 E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\obj\Debug\net7.0\CourrierFront.genruntimeconfig.cache
 E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\obj\Debug\net7.0\ref\CourrierFront.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\Ado.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\Newtonsoft.Json.dll

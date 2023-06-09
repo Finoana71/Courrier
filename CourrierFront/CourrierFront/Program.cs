@@ -1,9 +1,17 @@
+using CourrierFront.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+builder.Services.AddSingleton(builder.Configuration);
+
+builder.Services.AddScoped<DatabaseManager>();
+builder.Services.AddScoped<CourrierDataAccess>();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
