@@ -25,13 +25,19 @@ namespace Courrier.Pages.Courrier
         public List<Flag> Flags { get; set; }
         public List<Statut> Statuts { get; set; }
         public List<Departement> Departements { get; set; }
+        [BindProperty(SupportsGet = true)]
         public int? flag { get; set; }
+        [BindProperty(SupportsGet = true)]
         public int? statut { get; set; }
+        [BindProperty(SupportsGet = true)]
         public string expediteur { get; set; }
+        [BindProperty(SupportsGet = true)]
         public int? departement { get; set; }
+        [BindProperty(SupportsGet = true)]
         public string reference { get; set; }
 
-        public IActionResult OnGet(int? flag = null, int? statut = null, string expediteur = null, int? departement = null, string reference = null)
+        [HttpGet]
+        public IActionResult OnGet()
         {
             PageNumber = 1;
             if (int.TryParse(Request.Query["page"].FirstOrDefault(), out int pageValue))
