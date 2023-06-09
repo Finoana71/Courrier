@@ -25,10 +25,19 @@ namespace Courrier.Pages.Courrier
         public List<Flag> Flags { get; set; }
         public List<Statut> Statuts { get; set; }
         public List<Departement> Departements { get; set; }
+        public int? flag { get; set; }
+        public int? statut { get; set; }
+        public string expediteur { get; set; }
+        public int? departement { get; set; }
+        public string reference { get; set; }
 
-        public IActionResult OnGet(int page = 1, int? flag = null, int? statut = null, string expediteur = null, int? departement = null, string reference = null)
+        public IActionResult OnGet(int? flag = null, int? statut = null, string expediteur = null, int? departement = null, string reference = null)
         {
-            PageNumber = page;
+            PageNumber = 1;
+            if (int.TryParse(Request.Query["page"].FirstOrDefault(), out int pageValue))
+            {
+                PageNumber = pageValue;
+            } 
             ClaimsPrincipal currentUser = User;
 
             Flags = _dbContext.Flags.ToList();
@@ -38,17 +47,15 @@ namespace Courrier.Pages.Courrier
             string email = currentUser.Identity.Name;
             CurrentUser = _userService.findByEmail(email);
 
-
-            int pageSize = 10;
             Pages<CourrierDestinataire> courriersPage = null;
 
             if (string.IsNullOrEmpty(expediteur) && string.IsNullOrEmpty(reference) && flag == null && statut == null && departement == null)
             {
-                courriersPage = _courrierService.GetCourriersPageByUser(CurrentUser, page, pageSize);
+                courriersPage = _courrierService.GetCourriersPageByUser(CurrentUser, PageNumber, PageSize);
             }
             else
             {
-                courriersPage = _courrierService.GetCourriersByCriteria(CurrentUser, page, pageSize, flag, statut, expediteur, departement, reference);
+                courriersPage = _courrierService.GetCourriersByCriteria(CurrentUser, PageNumber, PageSize, flag, statut, expediteur, departement, reference);
             }
 
             CourriersPage = courriersPage;

@@ -125,31 +125,33 @@
 
     </tbody>
 </table>
-
 <!-- Liens de pagination -->
 @if (Model.CourriersPage.TotalPages > 1)
 {
     <div class="pagination-container">
         <nav>
             <ul class="pagination">
-                @if (Model.CourriersPage.TotalPages > 1)
+                @if (Model.CourriersPage.PageNumber > 1)
                 {
-                    <li class="page-item @(Model.CourriersPage.PageNumber == 1 ? "disabled" : "")">
-                        <a class="page-link" href="/Courrier/Liste?page=@(Model.CourriersPage.PageNumber - 1)" aria-label="Previous">
+                    <li class="page-item">
+                        <a class="page-link" href="/Courrier/Liste?page=@(Model.CourriersPage.PageNumber - 1)@(GetQueryString())" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                             <span class="sr-only">Précédent</span>
                         </a>
                     </li>
+                }
 
-                    @for (int i = 1; i <= Model.CourriersPage.TotalPages; i++)
-                    {
-                        <li class="page-item @(Model.CourriersPage.PageNumber == i ? "active" : "")">
-                            <a class="page-link" href="/Courrier/Liste?page=@i">@i</a>
-                        </li>
-                    }
+                @for (int i = 1; i <= Model.CourriersPage.TotalPages; i++)
+                {
+                    <li class="page-item @(Model.CourriersPage.PageNumber == i ? "active" : "")">
+                        <a class="page-link" href="/Courrier/Liste?page=@i@(GetQueryString())">@i</a>
+                    </li>
+                }
 
-                    <li class="page-item @(Model.CourriersPage.PageNumber == Model.CourriersPage.TotalPages ? "disabled" : "")">
-                        <a class="page-link" href="/Courrier/Liste?page=@(Model.CourriersPage.PageNumber + 1)" aria-label="Next">
+                @if (Model.CourriersPage.PageNumber < Model.CourriersPage.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="/Courrier/Liste?page=@(Model.CourriersPage.PageNumber + 1)@(GetQueryString())" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                             <span class="sr-only">Suivant</span>
                         </a>
@@ -157,6 +159,45 @@
                 }
             </ul>
         </nav>
-
     </div>
+}
+
+@functions {
+    // Méthode pour obtenir la chaîne de requête des critères de recherche
+    private string GetQueryString()
+    {
+        string queryString = "";
+
+        if (Model.flag.HasValue)
+        {
+            queryString += "&flag=" + Model.flag;
+        }
+
+        if (Model.statut.HasValue)
+        {
+            queryString += "&statut=" + Model.statut;
+        }
+
+        if (!string.IsNullOrEmpty(Model.expediteur))
+        {
+            queryString += "&expediteur=" + Model.expediteur;
+        }
+
+        if (Model.departement.HasValue)
+        {
+            queryString += "&departement=" + Model.departement;
+        }
+
+        if (!string.IsNullOrEmpty(Model.reference))
+        {
+            queryString += "&reference=" + Model.reference;
+        }
+
+        if (!string.IsNullOrEmpty(queryString))
+        {
+            queryString = "?" + queryString.TrimStart('&');
+        }
+
+        return queryString;
+    }
 }
