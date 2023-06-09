@@ -1,6 +1,7 @@
 ﻿using CourrierFront.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Cryptography.Xml;
 
 namespace CourrierFront.Controllers
 {
@@ -13,10 +14,15 @@ namespace CourrierFront.Controllers
             _courrierDataAccess = courrierDataAccess;
         }
 
-        public ActionResult Index(string reference, string expediteur, string objet, int page = 1, int pageSize = 10)
+        public IActionResult Index(CourrierViewModel model)
         {
-            List<Courrier> courriers = _courrierDataAccess.GetCourriers(reference, expediteur, objet, page, pageSize);
-            return View(courriers);
+            List<Courrier> courriers = _courrierDataAccess.GetCourriers(
+                model.Reference, model.Expediteur, model.Objet, model.Page, model.PageSize);
+
+            model.Courriers = courriers;
+            int totalCount = _courrierDataAccess.GetTotalCourriersCount(model.Reference, model.Expediteur, model.Objet);
+            model.TotalCount = totalCount;
+            return View(model);
         }
 
         public IActionResult Privacy()
@@ -30,4 +36,5 @@ namespace CourrierFront.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-}
+
+ }

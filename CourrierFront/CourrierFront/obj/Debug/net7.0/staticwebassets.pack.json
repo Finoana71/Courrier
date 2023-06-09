@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "E:\\Finoana\\MBDS\\.net\\projet\\CourrierFront\\CourrierFront\\wwwroot\\css\\styles.css",
+      "PackagePath": "staticwebassets\\css\\styles.css"
+    },
+    {
       "Id": "E:\\Finoana\\MBDS\\.net\\projet\\CourrierFront\\CourrierFront\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },

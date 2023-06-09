@@ -30,6 +30,24 @@ namespace CourrierFront.Models
                 }
             }
         }
+        public object ExecuteScalar(string query)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    return command.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erreur lors de l'exécution de la requête : {ex.Message}");
+                    return null;
+                }
+            }
+        }
 
         public DataTable ExecuteQuery(string query)
         {

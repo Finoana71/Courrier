@@ -1,37 +1,107 @@
 ﻿@using System.Web
-
-@model List<Courrier>
+@model CourrierViewModel
 @{
     ViewBag.Title = "Liste des Courriers";
 }
 
-<h1>Liste des Courriers</h1>
+<head>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
 
+<div class="container">
+    <h1>Liste des Courriers</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Référence</th>
-            <th>Expéditeur</th>
-            <th>Objet</th>
-            <th>Flag</th>
-            <th>Département</th>
-            <th>Statut</th>
-            <th>Date de création</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var courrier in Model)
-        {
+    @using (Html.BeginForm("Index", "", FormMethod.Get))
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Reference)
+            @Html.TextBoxFor(model => model.Reference, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Expediteur)
+            @Html.TextBoxFor(model => model.Expediteur, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Objet)
+            @Html.TextBoxFor(model => model.Objet, new { @class = "form-control" })
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-3">Rechercher</button>
+    }
+
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@courrier.Reference</td>
-                <td>@courrier.Expediteur</td>
-                <td>@courrier.Objet</td>
-                <td>@courrier.Flag.Libelle</td>
-                <td>@courrier.Departement.Nom</td>
-                <td>@courrier.Statut.Libelle</td>
-                <td>@courrier.DateCreation</td>
+                <th>Référence</th>
+                <th>Expéditeur</th>
+                <th>Objet</th>
+                <th>Flag</th>
+                <th>Département</th>
+                <th>Statut</th>
+                <th>Date de création</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var courrier in Model.Courriers)
+            {
+                <tr>
+                    <td>@courrier.Reference</td>
+                    <td>@courrier.Expediteur</td>
+                    <td>@courrier.Objet</td>
+                    <td>@courrier.Flag.Libelle</td>
+                    <td>@courrier.Departement.Nom</td>
+                    <td>@courrier.Statut.Libelle</td>
+                    <td>@courrier.DateCreation</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        @if (Model.PageCount > 1)
+        {
+            <ul class="pagination">
+                @if (Model.Page > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@BuildPaginationLink(1, Model.Reference, Model.Expediteur, Model.Objet)">Première</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@BuildPaginationLink(Model.Page - 1, Model.Reference, Model.Expediteur, Model.Objet)">Précédente</a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    <li class="page-item @(Model.Page == i ? "active" : "")">
+                        <a class="page-link" href="@BuildPaginationLink(i, Model.Reference, Model.Expediteur, Model.Objet)">@i</a>
+                    </li>
+                }
+
+                @if (Model.Page < Model.PageCount)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@BuildPaginationLink(Model.Page + 1, Model.Reference, Model.Expediteur, Model.Objet)">Suivante</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@BuildPaginationLink(Model.PageCount, Model.Reference, Model.Expediteur, Model.Objet)">Dernière</a>
+                    </li>
+                }
+            </ul>
         }
-    </tbody>
-</table>
+    </div>
+</div>
+
+@functions {
+    private string BuildPaginationLink(int page, string reference, string expediteur, string objet)
+    {
+        var queryString = HttpUtility.ParseQueryString(string.Empty);
+        queryString["page"] = page.ToString();
+        queryString["Reference"] = reference;
+        queryString["Expediteur"] = expediteur;
+        queryString["Objet"] = objet;
+        return $"?{queryString}";
+    }
+}

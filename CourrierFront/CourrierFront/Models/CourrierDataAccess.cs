@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Diagnostics.Metrics;
+using System.Security.Cryptography.Xml;
 using System.Text;
 
 namespace CourrierFront.Models
@@ -24,6 +25,11 @@ namespace CourrierFront.Models
 
         private string BuildQuery(string reference, string expediteur, string objet, int page, int pageSize)
         {
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (page < 1)
+                page = 1;
+
             StringBuilder queryBuilder = new StringBuilder("SELECT c.*, cd.Id IdCourrierDestinataire, " +
                 "IdStatut, IdFlag, IdDepartement, s.Libelle StatutLibelle, f.Libelle FlagLibelle, " +
                 "d.Nom DepartementNom " +
@@ -41,6 +47,34 @@ namespace CourrierFront.Models
             return queryBuilder.ToString();
         }
 
+        private string BuildCountQuery(string reference, string expediteur, string objet)
+        {
+            StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(*) FROM Courriers c JOIN CourriersDestinataires cd ON(c.Id = cd.IdCourrier)" +
+                " JOIN Statuts s ON(cd.IdStatut = s.Id) " +
+                " JOIN Flags f ON(f.Id = c.IdFlag)" +
+                " JOIN Departements d ON(cd.IdDepartement = d.Id) WHERE 1 = 1 ");
+
+            AddSearchCriteria(ref queryBuilder, "Reference", reference);
+            AddSearchCriteria(ref queryBuilder, "Expediteur", expediteur);
+            AddSearchCriteria(ref queryBuilder, "Objet", objet);
+
+            return queryBuilder.ToString();
+        }
+
+
+        public int GetTotalCourriersCount(string reference, string expediteur, string objet)
+        {
+            string query = BuildCountQuery(reference, expediteur, objet);
+            object result = _databaseManager.ExecuteScalar(query);
+
+            int totalCount = 0;
+            if (result != null && int.TryParse(result.ToString(), out int count))
+            {
+                totalCount = count;
+            }
+            return totalCount;
+        }
+
         private void AddSearchCriteria(ref StringBuilder queryBuilder, string columnName, string value)
         {
             if (!string.IsNullOrEmpty(value))
@@ -53,12 +87,14 @@ namespace CourrierFront.Models
         {
             List<Courrier> courriers = new List<Courrier>();
 
-            foreach (DataRow row in dataTable.Rows)
+            if (dataTable != null && dataTable.Rows != null)
             {
-                Courrier courrier = MapDataRowToCourrier(row);
-                courriers.Add(courrier);
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    Courrier courrier = MapDataRowToCourrier(row);
+                    courriers.Add(courrier);
+                }
             }
-
             return courriers;
         }
 

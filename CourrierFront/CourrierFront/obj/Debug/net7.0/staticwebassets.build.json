@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "MddZetjwuAqx3lnWMdjRXSQaOEv6mq1ikeGvzG0AYcg=",
+  "Hash": "Mahv9yFMqO7Cl/9upFREDPP13InkcDpo+PHOXohFKSQ=",
   "Source": "CourrierFront",
   "BasePath": "_content/CourrierFront",
   "Mode": "Default",
@@ -66,6 +66,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "E:\\Finoana\\MBDS\\.net\\projet\\CourrierFront\\CourrierFront\\wwwroot\\css\\styles.css",
+      "SourceId": "CourrierFront",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Finoana\\MBDS\\.net\\projet\\CourrierFront\\CourrierFront\\wwwroot\\",
+      "BasePath": "_content/CourrierFront",
+      "RelativePath": "css/styles.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\styles.css"
     },
     {
       "Identity": "E:\\Finoana\\MBDS\\.net\\projet\\CourrierFront\\CourrierFront\\wwwroot\\favicon.ico",
