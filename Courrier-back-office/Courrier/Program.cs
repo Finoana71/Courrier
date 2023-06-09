@@ -20,6 +20,7 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<UploadService>();
 builder.Services.AddScoped<CourrierService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ExportPdfService>();
 
 builder.Services.AddDistributedMemoryCache();
 

@@ -46,6 +46,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.5",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.14",
           "X.PagedList.Mvc.Core": "8.4.7",
+          "iTextSharp-LGPL-BouncyCastle-1.8": "4.1.7",
           "Microsoft.AspNetCore.Antiforgery.Reference": "7.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions.Reference": "7.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies.Reference": "7.0.0.0",
@@ -401,6 +402,17 @@
           "lib/net6.0/BCrypt.Net-Next.dll": {}
         }
       },
+      "BouncyCastle/1.8.1": {
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.8.1.0",
+            "fileVersion": "1.8.15362.1"
+          }
+        },
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "EntityFramework/6.4.4": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
@@ -430,6 +442,20 @@
             "assemblyVersion": "2.8.0.0",
             "fileVersion": "2.8.26.1919"
           }
+        }
+      },
+      "iTextSharp-LGPL-BouncyCastle-1.8/4.1.7": {
+        "dependencies": {
+          "BouncyCastle": "1.8.1"
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {
+            "assemblyVersion": "4.1.7.0",
+            "fileVersion": "4.1.7.0"
+          }
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
         }
       },
       "JetBrains.Annotations/2022.3.1": {
@@ -4051,6 +4077,13 @@
       "path": "bcrypt.net-next/4.0.3",
       "hashPath": "bcrypt.net-next.4.0.3.nupkg.sha512"
     },
+    "BouncyCastle/1.8.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nH+P67LavO5EcxjKdBxFfRdfdFhivS3Xp3+0br1KcpCI8DM6ksCWy6YYZjk7XFV+VsHGtkUovwIZ/vmCp42geA==",
+      "path": "bouncycastle/1.8.1",
+      "hashPath": "bouncycastle.1.8.1.nupkg.sha512"
+    },
     "EntityFramework/6.4.4": {
       "type": "package",
       "serviceable": true,
@@ -4064,6 +4097,13 @@
       "sha512": "sha512-OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "path": "humanizer.core/2.8.26",
       "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
+    },
+    "iTextSharp-LGPL-BouncyCastle-1.8/4.1.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lJYHtUo2pt3d3oP0rWGcOJ4YSVLzlYFdo6olxC5xwP75joILGox+KzsF7ktviD/ryZKSTXTaN+zDfDi419ax8g==",
+      "path": "itextsharp-lgpl-bouncycastle-1.8/4.1.7",
+      "hashPath": "itextsharp-lgpl-bouncycastle-1.8.4.1.7.nupkg.sha512"
     },
     "JetBrains.Annotations/2022.3.1": {
       "type": "package",

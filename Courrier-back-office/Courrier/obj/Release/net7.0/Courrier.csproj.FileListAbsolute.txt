@@ -417,3 +417,5 @@ E:\Finoana\MBDS\.net\projet\Courrier-back-office\Courrier\bin\Release\net7.0\New
 E:\Finoana\MBDS\.net\projet\Courrier-back-office\Courrier\bin\Release\net7.0\JetBrains.Annotations.dll
 E:\Finoana\MBDS\.net\projet\Courrier-back-office\Courrier\bin\Release\net7.0\X.PagedList.dll
 E:\Finoana\MBDS\.net\projet\Courrier-back-office\Courrier\bin\Release\net7.0\X.PagedList.Mvc.Core.dll
+E:\Finoana\MBDS\.net\projet\Courrier-back-office\Courrier\bin\Release\net7.0\BouncyCastle.Crypto.dll
+E:\Finoana\MBDS\.net\projet\Courrier-back-office\Courrier\bin\Release\net7.0\itextsharp.dll

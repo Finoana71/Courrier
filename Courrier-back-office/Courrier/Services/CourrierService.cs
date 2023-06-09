@@ -172,16 +172,20 @@ namespace Courrier.Services
                 _dbContext.SaveChanges();
             }
         }
-
-        public Pages<CourrierDestinataire> GetCourriersByCriteria(User user, int page, int pageSize, int? flag, int? statut, string expediteur, int? departement, string reference)
+        public IQueryable<CourrierDestinataire> GetFilteredCourriers(User user, int? flag, int? statut, string expediteur, int? departement, string reference)
         {
             IQueryable<CourrierDestinataire> query = FilterCourriersByUserRole(user);
-
             query = ApplyFlagFilter(query, flag);
             query = ApplyStatutFilter(query, statut);
             query = ApplyExpediteurFilter(query, expediteur);
             query = ApplyDepartementFilter(query, departement);
             query = ApplyReferenceFilter(query, reference);
+            return query;
+        }
+
+        public Pages<CourrierDestinataire> GetCourriersByCriteria(User user, int page, int pageSize, int? flag, int? statut, string expediteur, int? departement, string reference)
+        {
+            IQueryable<CourrierDestinataire> query = GetFilteredCourriers(user, flag, statut, expediteur, departement, reference);
 
             // Pagination
             int totalCount = query.Count();
@@ -193,6 +197,17 @@ namespace Courrier.Services
             List<CourrierDestinataire> CourriersDestinataires = query.ToList();
 
             return new Pages<CourrierDestinataire>(CourriersDestinataires, page, pageSize, totalCount, totalPages);
+        }
+
+        public List<CourrierDestinataire> GetCourriersByCriteriaSansPage(User user, int? flag, int? statut, string expediteur, int? departement, string reference)
+        {
+            IQueryable<CourrierDestinataire> query = GetFilteredCourriers(user, flag, statut, expediteur, departement, reference);
+
+            query = IncludeRelatedEntities(query);
+
+            List<CourrierDestinataire> CourriersDestinataires = query.ToList();
+
+            return CourriersDestinataires;
         }
 
         private IQueryable<CourrierDestinataire> ApplyFlagFilter(IQueryable<CourrierDestinataire> query, int? flag)

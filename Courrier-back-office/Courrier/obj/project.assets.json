@@ -59,6 +59,15 @@
           }
         }
       },
+      "BouncyCastle/1.8.1": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "EntityFramework/6.4.4": {
         "type": "package",
         "dependencies": {
@@ -100,6 +109,18 @@
           "lib/netstandard2.0/Humanizer.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "iTextSharp-LGPL-BouncyCastle-1.8/4.1.7": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.1"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "JetBrains.Annotations/2022.3.1": {
@@ -3526,6 +3547,19 @@
         "readme.md"
       ]
     },
+    "BouncyCastle/1.8.1": {
+      "sha512": "nH+P67LavO5EcxjKdBxFfRdfdFhivS3Xp3+0br1KcpCI8DM6ksCWy6YYZjk7XFV+VsHGtkUovwIZ/vmCp42geA==",
+      "type": "package",
+      "path": "bouncycastle/1.8.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Readme.txt",
+        "bouncycastle.1.8.1.nupkg.sha512",
+        "bouncycastle.nuspec",
+        "lib/BouncyCastle.Crypto.dll"
+      ]
+    },
     "EntityFramework/6.4.4": {
       "sha512": "yj1+/4tci7Panu3jKDHYizxwVm0Jvm7b7m057b5h4u8NUHGCR8WIWirBTw+8EptRffwftIWPBeIRGNKD1ewEMQ==",
       "type": "package",
@@ -3597,6 +3631,18 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "iTextSharp-LGPL-BouncyCastle-1.8/4.1.7": {
+      "sha512": "lJYHtUo2pt3d3oP0rWGcOJ4YSVLzlYFdo6olxC5xwP75joILGox+KzsF7ktviD/ryZKSTXTaN+zDfDi419ax8g==",
+      "type": "package",
+      "path": "itextsharp-lgpl-bouncycastle-1.8/4.1.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "itextsharp-lgpl-bouncycastle-1.8.4.1.7.nupkg.sha512",
+        "itextsharp-lgpl-bouncycastle-1.8.nuspec",
+        "lib/itextsharp.dll"
       ]
     },
     "JetBrains.Annotations/2022.3.1": {
@@ -9781,7 +9827,8 @@
       "Microsoft.AspNetCore.Session >= 2.2.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.5",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.14",
-      "X.PagedList.Mvc.Core >= 8.4.7"
+      "X.PagedList.Mvc.Core >= 8.4.7",
+      "iTextSharp-LGPL-BouncyCastle-1.8 >= 4.1.7"
     ]
   },
   "packageFolders": {
@@ -9869,6 +9916,10 @@
           "X.PagedList.Mvc.Core": {
             "target": "Package",
             "version": "[8.4.7, )"
+          },
+          "iTextSharp-LGPL-BouncyCastle-1.8": {
+            "target": "Package",
+            "version": "[4.1.7, )"
           }
         },
         "imports": [
@@ -9895,6 +9946,26 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Le package 'BouncyCastle 1.8.1' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' au lieu du framework cible du projet 'net7.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
+      "libraryId": "BouncyCastle",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Le package 'iTextSharp-LGPL-BouncyCastle-1.8 4.1.7' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' au lieu du framework cible du projet 'net7.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
+      "libraryId": "iTextSharp-LGPL-BouncyCastle-1.8",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",

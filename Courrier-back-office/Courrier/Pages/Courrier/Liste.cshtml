@@ -162,6 +162,10 @@
     </div>
 }
 
+<form method="post" asp-page-handler="ExporterPdf">
+    <button type="submit">Exporter en PDF</button>
+</form>
+
 @functions {
     // Méthode pour obtenir la chaîne de requête des critères de recherche
     private string GetQueryString()

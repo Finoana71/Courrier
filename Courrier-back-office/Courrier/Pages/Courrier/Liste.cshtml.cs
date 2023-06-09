@@ -16,7 +16,9 @@ namespace Courrier.Pages.Courrier
     {
         private readonly UserService _userService;
         private readonly CourrierService _courrierService;
-        private readonly AppDbContext _dbContext;
+        private readonly AppDbContext _dbContext; 
+        private readonly ExportPdfService _exportPdfService;
+
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 2;
         public Pages<CourrierDestinataire> CourriersPage { get; set; }
@@ -70,12 +72,13 @@ namespace Courrier.Pages.Courrier
         }
 
 
-        public ListeModel(CourrierService courrierService, UserService userService, AppDbContext dbContext)
+        public ListeModel(CourrierService courrierService, UserService userService
+                , AppDbContext dbContext, ExportPdfService exportPdfService)
         {
             _courrierService = courrierService;
             _userService = userService;
             _dbContext = dbContext;
-
+            _exportPdfService = exportPdfService;
         }
 
         public IActionResult OnPostTransfererSecretaire(int courrierId)
@@ -95,6 +98,27 @@ namespace Courrier.Pages.Courrier
             _courrierService.TransfererDirecteur(courrierId);
             // Redirect back to the current page
             return RedirectToPage("/Courrier/Liste");
+        }
+
+        public ActionResult OnPostExporterPdf()
+        {
+            ClaimsPrincipal currentUser = User;
+            string email = currentUser.Identity.Name;
+            CurrentUser = _userService.findByEmail(email);
+            // Récupérer les données de la liste des courriers
+            var courriers = _courrierService.GetCourriersByCriteriaSansPage(CurrentUser, flag, statut, expediteur, departement, reference);
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                // Exportez les courriers vers le flux MemoryStream
+                _exportPdfService.ExportCourriersToPdf(courriers, memoryStream);
+
+                // Récupérez les données du MemoryStream
+                byte[] pdfBytes = memoryStream.ToArray();
+
+                // Retournez le fichier PDF en tant que résultat de l'action
+                return File(pdfBytes, "application/pdf", "liste_courriers.pdf");
+            }
         }
     }
 }
