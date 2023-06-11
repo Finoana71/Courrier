@@ -31,6 +31,14 @@
         <button type="submit" class="btn btn-primary mb-3">Rechercher</button>
     }
 
+    @using (Html.BeginForm("ExportToPdf", "Home", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.Reference)
+        @Html.HiddenFor(model => model.Expediteur)
+        @Html.HiddenFor(model => model.Objet)
+
+        <button type="submit" class="btn btn-outline-danger mb-3">Télécharger PDF</button>
+    }
     <table class="table table-striped">
         <thead>
             <tr>
@@ -39,6 +47,7 @@
                 <th>Objet</th>
                 <th>Flag</th>
                 <th>Département</th>
+                <th>Fichier joint</th
                 <th>Statut</th>
                 <th>Date de création</th>
             </tr>
@@ -52,6 +61,12 @@
                     <td>@courrier.Objet</td>
                     <td>@courrier.Flag.Libelle</td>
                     <td>@courrier.Departement.Nom</td>
+                    <td>
+                        @if (courrier.Fichier != null)
+                        {
+                            <a href="@ViewBag.UrlBack/uploads/@courrier.Fichier" class="btn btn-link" download>Télécharger</a>
+                        }
+                    </td>
                     <td>@courrier.Statut.Libelle</td>
                     <td>@courrier.DateCreation</td>
                 </tr>

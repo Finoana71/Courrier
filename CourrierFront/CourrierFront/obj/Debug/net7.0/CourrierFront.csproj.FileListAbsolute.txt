@@ -38,3 +38,15 @@ E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\obj\Debug\net7.0\Courrie
 E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\obj\Debug\net7.0\ref\CourrierFront.dll
 E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\Ado.dll
 E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\Newtonsoft.Json.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\Select.Html.dep
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\Select.Tools.dep
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\Select.Pdf.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\System.Drawing.Common.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\System.Security.Permissions.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\itextsharp.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\BouncyCastle.Crypto.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.0\Microsoft.Win32.SystemEvents.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp2.0\System.Drawing.Common.dll
+E:\Finoana\MBDS\.net\projet\CourrierFront\CourrierFront\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.0\System.Drawing.Common.dll

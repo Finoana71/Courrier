@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="Ado" Version="1.1.1" />
+    <PackageReference Include="iTextSharp-LGPL-BouncyCastle-1.8" Version="4.1.7" />
+    <PackageReference Include="Select.HtmlToPdf" Version="23.1.0" />
+    <PackageReference Include="Select.Pdf.NetCore" Version="23.1.0" />
+    <PackageReference Include="Select.Pdf.x64" Version="23.1.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 

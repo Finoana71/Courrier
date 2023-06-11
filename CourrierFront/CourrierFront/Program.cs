@@ -1,4 +1,4 @@
-using CourrierFront.Models;
+using CourrierFront.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +9,7 @@ builder.Services.AddSingleton(builder.Configuration);
 
 builder.Services.AddScoped<DatabaseManager>();
 builder.Services.AddScoped<CourrierDataAccess>();
+builder.Services.AddScoped<ExportPdfService>();
 
 var app = builder.Build();
 
