@@ -54,6 +54,15 @@
     </div>
 </form>
 
+<form method="post" asp-page-handler="ExporterPdf">
+    @Html.HiddenFor(model => model.departement)
+    @Html.HiddenFor(model => model.flag)
+    @Html.HiddenFor(model => model.reference)
+    @Html.HiddenFor(model => model.statut)
+    @Html.HiddenFor(model => model.expediteur)
+
+    <button type="submit" class="btn btn-outline-danger mb-3">Télécharger PDF</button>
+</form>
 
 <!-- Affichage des courriers -->
 <table class="courriers-table mt-3">
@@ -161,10 +170,10 @@
         </nav>
     </div>
 }
-
+@*
 <form method="post" asp-page-handler="ExporterPdf">
     <button type="submit">Exporter en PDF</button>
-</form>
+</form>*@
 
 @functions {
     // Méthode pour obtenir la chaîne de requête des critères de recherche
