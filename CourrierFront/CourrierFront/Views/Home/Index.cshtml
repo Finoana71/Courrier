@@ -27,7 +27,36 @@
             @Html.LabelFor(model => model.Objet)
             @Html.TextBoxFor(model => model.Objet, new { @class = "form-control" })
         </div>
-
+            <div class="form-group">
+            <label for="departement">Département :</label>
+            <select id="departement" name="IdDepartement" class="form-control">
+                <option value="">Tous</option>
+                @foreach (var departement in Model.Departements)
+                {
+                    <option value="@departement.Id" selected="@(departement.Id == Model.IdDepartement)">@departement.Nom</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="flag">Flag :</label>
+            <select id="flag" name="IdFlag" class="form-control">
+                <option value="">Tous</option>
+                @foreach (var flag in Model.Flags)
+                {
+                    <option value="@flag.Id" selected="@(flag.Id == Model.IdFlag)">@flag.Libelle</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="statut">Statut :</label>
+            <select id="statut" name="IdStatut" class="form-control">
+                <option value="">Tous</option>
+                @foreach (var statut in Model.Statuts)
+                {
+                    <option value="@statut.Id" selected="@(statut.Id == Model.IdStatut)">@statut.Libelle</option>
+                }
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary mb-3">Rechercher</button>
     }
 
@@ -36,6 +65,9 @@
         @Html.HiddenFor(model => model.Reference)
         @Html.HiddenFor(model => model.Expediteur)
         @Html.HiddenFor(model => model.Objet)
+        @Html.HiddenFor(model => model.IdDepartement)
+        @Html.HiddenFor(model => model.IdStatut)
+        @Html.HiddenFor(model => model.IdFlag)
 
         <button type="submit" class="btn btn-outline-danger mb-3">Télécharger PDF</button>
     }
@@ -47,7 +79,8 @@
                 <th>Objet</th>
                 <th>Flag</th>
                 <th>Département</th>
-                <th>Fichier joint</th
+                <th>Externe</th>
+                <th>Fichier joint</th>
                 <th>Statut</th>
                 <th>Date de création</th>
             </tr>
@@ -67,6 +100,18 @@
                             <a href="@ViewBag.UrlBack/uploads/@courrier.Fichier" class="btn btn-link" download>Télécharger</a>
                         }
                     </td>
+                    <td>
+                    <td>
+                            @if (courrier.Interne)
+                            {
+                            <span>Non</span>
+                            }
+                            else
+                            {
+                            <span>Oui</span>
+                            }
+                    </td>
+                    </td>
                     <td>@courrier.Statut.Libelle</td>
                     <td>@courrier.DateCreation</td>
                 </tr>
@@ -81,27 +126,27 @@
                 @if (Model.Page > 1)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="@BuildPaginationLink(1, Model.Reference, Model.Expediteur, Model.Objet)">Première</a>
+                        <a class="page-link" href="@BuildPaginationLink(1, Model.Reference, Model.Expediteur, Model.Objet, Model.IdDepartement, Model.IdStatut, Model.IdFlag)">Première</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="@BuildPaginationLink(Model.Page - 1, Model.Reference, Model.Expediteur, Model.Objet)">Précédente</a>
+                        <a class="page-link" href="@BuildPaginationLink(Model.Page - 1, Model.Reference, Model.Expediteur, Model.Objet, Model.IdDepartement, Model.IdStatut, Model.IdFlag)">Précédente</a>
                     </li>
                 }
 
                 @for (int i = 1; i <= Model.PageCount; i++)
                 {
                     <li class="page-item @(Model.Page == i ? "active" : "")">
-                        <a class="page-link" href="@BuildPaginationLink(i, Model.Reference, Model.Expediteur, Model.Objet)">@i</a>
+                        <a class="page-link" href="@BuildPaginationLink(i, Model.Reference, Model.Expediteur, Model.Objet, Model.IdDepartement, Model.IdStatut, Model.IdFlag)">@i</a>
                     </li>
                 }
 
                 @if (Model.Page < Model.PageCount)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="@BuildPaginationLink(Model.Page + 1, Model.Reference, Model.Expediteur, Model.Objet)">Suivante</a>
+                        <a class="page-link" href="@BuildPaginationLink(Model.Page + 1, Model.Reference, Model.Expediteur, Model.Objet, Model.IdDepartement, Model.IdStatut, Model.IdFlag)">Suivante</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="@BuildPaginationLink(Model.PageCount, Model.Reference, Model.Expediteur, Model.Objet)">Dernière</a>
+                        <a class="page-link" href="@BuildPaginationLink(Model.PageCount, Model.Reference, Model.Expediteur, Model.Objet, Model.IdDepartement, Model.IdStatut, Model.IdFlag)">Dernière</a>
                     </li>
                 }
             </ul>
@@ -110,13 +155,17 @@
 </div>
 
 @functions {
-    private string BuildPaginationLink(int page, string reference, string expediteur, string objet)
+    private string BuildPaginationLink(int page, string reference, string expediteur, string objet, 
+        int idDepartement, int idStatut, int idFlag)
     {
         var queryString = HttpUtility.ParseQueryString(string.Empty);
         queryString["page"] = page.ToString();
         queryString["Reference"] = reference;
         queryString["Expediteur"] = expediteur;
         queryString["Objet"] = objet;
+        queryString["IdDepartement"] = idDepartement + "";
+        queryString["IdStatut"] = idStatut + "";
+        queryString["IdFlag"] = idFlag + "";
         return $"?{queryString}";
     }
 }

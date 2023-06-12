@@ -30,13 +30,22 @@ namespace CourrierFront.Controllers
         public IActionResult Index(CourrierViewModel model)
         {
             List<Courrier> courriers = _courrierDataAccess.GetCourriers(
-                model.Reference, model.Expediteur, model.Objet, model.Page, model.PageSize);
+                model.Reference, model.Expediteur, model.Objet, model.IdDepartement, model.IdFlag, model.IdStatut, model.Page, model.PageSize);
             string urlBack = _configuration.GetValue<string>("AppSettings:url_back");
 
             ViewBag.UrlBack = urlBack;
 
+            // Obtenez les départements, les flags et les statuts pour les options de sélection
+            List<Departement> departements = _courrierDataAccess.GetDepartements();
+            List<Flag> flags = _courrierDataAccess.GetFlags();
+            List<Statut> statuts = _courrierDataAccess.GetStatuts();
+
+            model.Departements = departements;
+            model.Flags = flags;
+            model.Statuts = statuts;
             model.Courriers = courriers;
-            int totalCount = _courrierDataAccess.GetTotalCourriersCount(model.Reference, model.Expediteur, model.Objet);
+
+            int totalCount = _courrierDataAccess.GetTotalCourriersCount(model.Reference, model.Expediteur, model.Objet, model.IdDepartement, model.IdFlag, model.IdStatut);
             model.TotalCount = totalCount;
             return View(model);
         }
@@ -44,8 +53,7 @@ namespace CourrierFront.Controllers
         public ActionResult ExportToPdf(CourrierViewModel model)
         {
             List<Courrier> courriers = _courrierDataAccess.GetCourriersNoPaginate(
-                model.Reference, model.Expediteur, model.Objet);
-
+                model.Reference, model.Expediteur, model.Objet, model.IdDepartement, model.IdFlag, model.IdStatut);
 
             using (MemoryStream memoryStream = new MemoryStream())
             {

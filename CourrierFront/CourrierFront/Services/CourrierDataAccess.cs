@@ -15,9 +15,10 @@ namespace CourrierFront.Services
             _databaseManager = databaseManager;
         }
 
-        public List<Courrier> GetCourriers(string reference, string expediteur, string objet, int page, int pageSize)
+        public List<Courrier> GetCourriers(string reference, string expediteur, string objet, 
+            int? departementId, int? flagId, int? statutId, int page, int pageSize)
         {
-            string query = BuildQuery(reference, expediteur, objet, page, pageSize);
+            string query = BuildQuery(reference, expediteur, objet, departementId, flagId, statutId, page, pageSize);
             DataTable dataTable = _databaseManager.ExecuteQuery(query);
 
             List<Courrier> courriers = MapDataTableToCourriers(dataTable);
@@ -25,9 +26,10 @@ namespace CourrierFront.Services
             return courriers;
         }
 
-        public List<Courrier> GetCourriersNoPaginate(string reference, string expediteur, string objet)
+        public List<Courrier> GetCourriersNoPaginate(string reference, string expediteur, string objet, 
+            int? departementId, int? flagId, int? statutId)
         {
-            string query = BuildQueryNoPaginate(reference, expediteur, objet).ToString();
+            string query = BuildQueryNoPaginate(reference, expediteur, objet, departementId, flagId, statutId).ToString();
             DataTable dataTable = _databaseManager.ExecuteQuery(query);
 
             List<Courrier> courriers = MapDataTableToCourriers(dataTable);
@@ -36,7 +38,7 @@ namespace CourrierFront.Services
         }
 
 
-        public StringBuilder BuildQueryNoPaginate(string reference, string expediteur, string objet)
+        public StringBuilder BuildQueryNoPaginate(string reference, string expediteur, string objet, int? departementId, int? flagId, int? statutId)
         {
             StringBuilder queryBuilder = new StringBuilder("SELECT c.*, cd.Id IdCourrierDestinataire, " +
               "IdStatut, IdFlag, IdDepartement, s.Libelle StatutLibelle, f.Libelle FlagLibelle, " +
@@ -49,23 +51,29 @@ namespace CourrierFront.Services
             AddSearchCriteria(ref queryBuilder, "Reference", reference);
             AddSearchCriteria(ref queryBuilder, "Expediteur", expediteur);
             AddSearchCriteria(ref queryBuilder, "Objet", objet);
+            AddSearchCriteria(ref queryBuilder, "IdDepartement", departementId);
+            AddSearchCriteria(ref queryBuilder, "IdFlag", flagId);
+            AddSearchCriteria(ref queryBuilder, "IdStatut", statutId);
+
             return queryBuilder;
         }
 
-        private string BuildQuery(string reference, string expediteur, string objet, int page, int pageSize)
+
+        private string BuildQuery(string reference, string expediteur, string objet,
+            int? departementId, int? flagId, int? statutId, int page, int pageSize)
         {
             if (pageSize <= 0)
                 pageSize = 10;
             if (page < 1)
                 page = 1;
 
-            StringBuilder queryBuilder = BuildQueryNoPaginate(reference, expediteur, objet);
+            StringBuilder queryBuilder = BuildQueryNoPaginate(reference, expediteur, objet, departementId, flagId, statutId);
             queryBuilder.Append($" ORDER BY Id OFFSET {(page - 1) * pageSize} ROWS FETCH NEXT {pageSize} ROWS ONLY");
 
             return queryBuilder.ToString();
         }
 
-        private string BuildCountQuery(string reference, string expediteur, string objet)
+        private string BuildCountQuery(string reference, string expediteur, string objet, int? departementId, int? flagId, int? statutId)
         {
             StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(*) FROM Courriers c JOIN CourriersDestinataires cd ON(c.Id = cd.IdCourrier)" +
                 " JOIN Statuts s ON(cd.IdStatut = s.Id) " +
@@ -76,13 +84,18 @@ namespace CourrierFront.Services
             AddSearchCriteria(ref queryBuilder, "Expediteur", expediteur);
             AddSearchCriteria(ref queryBuilder, "Objet", objet);
 
+            AddSearchCriteria(ref queryBuilder, "IdDepartement", departementId);
+            AddSearchCriteria(ref queryBuilder, "IdFlag", flagId);
+            AddSearchCriteria(ref queryBuilder, "IdStatut", statutId);
+
             return queryBuilder.ToString();
         }
 
 
-        public int GetTotalCourriersCount(string reference, string expediteur, string objet)
+
+        public int GetTotalCourriersCount(string reference, string expediteur, string objet, int? departementId, int? flagId, int? statutId)
         {
-            string query = BuildCountQuery(reference, expediteur, objet);
+            string query = BuildCountQuery(reference, expediteur, objet, departementId, flagId, statutId);
             object result = _databaseManager.ExecuteScalar(query);
 
             int totalCount = 0;
@@ -98,6 +111,13 @@ namespace CourrierFront.Services
             if (!string.IsNullOrEmpty(value))
             {
                 queryBuilder.Append($" AND {columnName} LIKE '%{value}%'");
+            }
+        }
+        private void AddSearchCriteria(ref StringBuilder queryBuilder, string columnName, int? value)
+        {
+            if (value.HasValue && value != 0)
+            {
+                queryBuilder.Append($" AND {columnName} = {value.Value}");
             }
         }
 
